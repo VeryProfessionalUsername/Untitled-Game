@@ -1,9 +1,11 @@
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
 
     //Screen settings
     final int originalTileSize = 16; //size of game tiles
@@ -23,14 +25,28 @@ public class GamePanel extends JPanel implements Runnable{
 	this.setDoubleBuffered(true);
     }
 
-    public void startGameThread(){
+    public void startGameThread() {
 	gameThread = new Thread(this);
 	gameThread.start();
-}
-    
+    }
+
     @Override
-    public void run() {//When an object implementing runnable creates a thread
-			// causes run method to be called in that thread.
-	
+    public void run() {//When an object implementing runnable creates a thread. causes run method to be called in that thread.
+	while (gameThread != null) {
+	    update();//Call update method to update character position
+
+	    repaint();
+	}
+    }
+    
+    public void update(){
+    
+    }
+    
+    public void paintComponent(Graphics g){
+    
+	super.paintComponent(g);
+
+	Graphics2D g2 = (Graphics2D)g; //Graphics2D has extra functionality
     }
 }
