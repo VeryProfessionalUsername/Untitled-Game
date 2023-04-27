@@ -20,6 +20,14 @@ public class GamePanel extends JPanel implements Runnable {
     InputDetection input = new InputDetection();//Creates new input detection created in InputDetection.java
     Thread gameThread;
 
+    //Player position
+    int playerX = 100;
+    int playerY = 100;
+    int playerSpeed = 4;//decides how far player moves per "tick" when input key is pressed.
+
+    int fps = 60;//frames per second
+    final int NANOSECONDS_PER_SECOND = 1000000000;
+
     public GamePanel() {
 	this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this.setBackground(Color.black);
@@ -35,15 +43,43 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {//When an object implementing runnable creates a thread. causes run method to be called in that thread.
+	double drawInterval = NANOSECONDS_PER_SECOND/fps;
+	double nextDrawTime = System.nanoTime() + drawInterval;
+
 	while (gameThread != null) {
+
 	    update();//Call update method to update character position
 
 	    repaint();//Call to redraw the screen with updated positions.
+	    
+	    try{//This slows down game clock so it's not ridiculously fast.
+		double remainingTime = nextDrawTime - System.nanoTime();
+		remainingTime = remainingTime/NANOSECONDS_PER_SECOND;//Converts to milliseconds for sleep method to work properly.
+
+		if(remainingTime < 0) remainingTime = 0;
+
+		Thread.sleep((long)remainingTime);
+
+		nextDrawTime += drawInterval;
+	    }catch (InterruptedException e){
+		e.printStackTrace();
+	    }
 	}
     }
     
     public void update(){
-    
+	if(input.up){
+	    playerY -= playerSpeed;//For whatever reason Y increases as you go down.
+	}
+	if(input.left){
+	    playerX -= playerSpeed;//For whatever reason Y increases as you go down.
+	}
+	if(input.down){
+	    playerY += playerSpeed;//For whatever reason Y increases as you go down.
+	}
+	if(input.right){
+	    playerX += playerSpeed;//For whatever reason Y increases as you go down.
+	}
     }
     
     public void paintComponent(Graphics g){
@@ -54,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	g2.setColor(Color.white);
 
-	g2.fillRect(100, 100, TILE_SIZE, TILE_SIZE);//Creates rectangle at (100, 100) that is TILE_SIZE square
+	g2.fillRect(playerX, playerY, TILE_SIZE, TILE_SIZE);//Creates rectangle at (100, 100) that is TILE_SIZE square
 
 	g2.dispose();
     }
