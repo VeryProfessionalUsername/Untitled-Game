@@ -1,6 +1,9 @@
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,11 +24,21 @@ public class Player extends Entity{
 	this.input = input;
 
 	setDefaultValues();
+	getPlayerImage();
     }
     public void setDefaultValues(){
 	x = 100;
 	y = 100;
 	speed = 4;
+    }
+    public void getPlayerImage(){
+	try{
+
+	   sprite = ImageIO.read(getClass().getResourceAsStream("/player/player.png")); 
+
+	}catch(IOException e){
+	   e.printStackTrace(); 
+	}
     }
     public void update(){
 	if(input.up){
@@ -42,8 +55,13 @@ public class Player extends Entity{
 	}
     }
     public void draw(Graphics2D g2){
-	g2.setColor(Color.white);
+	//g2.setColor(Color.white);
 
-	g2.fillRect(x, y, gamePanel.TILE_SIZE, gamePanel.TILE_SIZE);//Creates rectangle at (100, 100) that is TILE_SIZE square
+	//g2.fillRect(x, y, gamePanel.TILE_SIZE, gamePanel.TILE_SIZE);//Creates rectangle at (100, 100) that is TILE_SIZE square
+
+	BufferedImage image = sprite;
+
+	g2.drawImage(image, x, y , gamePanel.TILE_SIZE, gamePanel.TILE_SIZE, null);
+
     }
 }
