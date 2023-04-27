@@ -16,7 +16,7 @@ public class Entity {
     public int x, y;
     public int speed;
     public BufferedImage sprite;
-    public Rectangle solidArea;
-    public boolean collisionOn = false;
+    //public Rectangle solidArea;
+    //public boolean collisionOn = false;
 
 }

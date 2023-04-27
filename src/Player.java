@@ -24,11 +24,11 @@ public class Player extends Entity{
 	this.gamePanel = gamePanel;
 	this.input = input;
 
-	solidArea = new Rectangle();
-	solidArea.x = 8;
-	solidArea.y = 8;
-	solidArea.width = 60;
-	solidArea.height = 60;
+	//solidArea = new Rectangle();
+	//solidArea.x = 8;
+	//solidArea.y = 8;
+	//solidArea.width = 60;
+	//solidArea.height = 60;
 
 	setDefaultValues();
 	getPlayerImage();
@@ -61,8 +61,8 @@ public class Player extends Entity{
 	    x += speed;//For whatever reason Y increases as you go down.
 	}
 
-	collisionOn = false;
-	gamePanel.collisionCheck.checkTile(this);
+	//collisionOn = false;
+	//gamePanel.collisionCheck.checkTile(this);
     }
     public void draw(Graphics2D g2){
 	//g2.setColor(Color.white);

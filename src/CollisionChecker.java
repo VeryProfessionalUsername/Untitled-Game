@@ -7,7 +7,7 @@
  *
  * @author Alex
  */
-public class CollisionChecker {
+/*public class CollisionChecker {
 
     GamePanel gamePanel;
 
@@ -22,4 +22,4 @@ public class CollisionChecker {
 
     }
     
-}
+}*/
