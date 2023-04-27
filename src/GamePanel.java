@@ -8,21 +8,24 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable {
 
     //Screen settings
-    final int originalTileSize = 16; //size of game tiles
-    final int scale = 4; //Factor to scale up tiles. On 1080p 16x16 looks small
+    final int ORIGINAL_TILE_SIZE = 16; //size of game tiles
+    final int SCALE = 4; //Factor to scale up tiles. On 1080p 16x16 looks small
 
-    final int tileSize = originalTileSize * scale; //Tile size scaled up
-    final int maxCol = 16; // Columns and rows of tiles making up game
-    final int maxRow = 12; //4:3 resolution
-    final int screenWidth = tileSize * maxCol; //Window width in pixels
-    final int screenHeight = tileSize * maxRow; //Window height in pixels.
+    final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; //Tile size scaled up
+    final int MAX_COL = 16; // Columns and rows of tiles making up game
+    final int MAX_ROW = 12; //4:3 resolution
+    final int SCREEN_WIDTH = TILE_SIZE * MAX_COL; //Window width in pixels
+    final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW; //Window height in pixels.
 
+    InputDetection input = new InputDetection();//Creates new input detection created in InputDetection.java
     Thread gameThread;
 
     public GamePanel() {
-	this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+	this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this.setBackground(Color.black);
-	this.setDoubleBuffered(true);
+	this.setDoubleBuffered(true);//Makes game look smoother. Enabled by default
+	this.addKeyListener(input);//Panel can now accept keyboard input
+	this.setFocusable(true);//Panel can be focused (clicked on) to recieve input
     }
 
     public void startGameThread() {
@@ -35,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 	while (gameThread != null) {
 	    update();//Call update method to update character position
 
-	    repaint();
+	    repaint();//Call to redraw the screen with updated positions.
 	}
     }
     
@@ -47,6 +50,12 @@ public class GamePanel extends JPanel implements Runnable {
     
 	super.paintComponent(g);
 
-	Graphics2D g2 = (Graphics2D)g; //Graphics2D has extra functionality
+	Graphics g2 = (Graphics2D)g;//Graphics2D similar to Graphics + extra functionality
+
+	g2.setColor(Color.white);
+
+	g2.fillRect(100, 100, TILE_SIZE, TILE_SIZE);//Creates rectangle at (100, 100) that is TILE_SIZE square
+
+	g2.dispose();
     }
 }
