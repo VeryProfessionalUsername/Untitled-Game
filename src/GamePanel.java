@@ -12,13 +12,15 @@ public class GamePanel extends JPanel implements Runnable {
     final int SCALE = 4; //Factor to scale up tiles. On 1080p 16x16 looks small
 
     public final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; //Tile size scaled up
-    final int MAX_COL = 16; // Columns and rows of tiles making up game
-    final int MAX_ROW = 12; //4:3 resolution
-    final int SCREEN_WIDTH = TILE_SIZE * MAX_COL; //Window width in pixels
-    final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW; //Window height in pixels.
+    public final int MAX_COL = 16; // Columns and rows of tiles making up game
+    public final int MAX_ROW = 12; //4:3 resolution
+    public final int SCREEN_WIDTH = TILE_SIZE * MAX_COL; //Window width in pixels
+    public final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW; //Window height in pixels.
 
+    TileManager tileL = new TileManager(this);
     InputDetection input = new InputDetection();//Creates new input detection created in InputDetection.java
     Thread gameThread;
+    public CollisionChecker collisionCheck = new CollisionChecker(this);
     Player player = new Player(this,input);
 
     int fps = 60;//frames per second
@@ -72,6 +74,8 @@ public class GamePanel extends JPanel implements Runnable {
 	super.paintComponent(g);
 
 	Graphics g2 = (Graphics2D)g;//Graphics2D similar to Graphics + extra functionality
+
+	tileL.draw((Graphics2D) g2);
 
 	player.draw((Graphics2D) g2);
 

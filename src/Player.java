@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -23,18 +24,24 @@ public class Player extends Entity{
 	this.gamePanel = gamePanel;
 	this.input = input;
 
+	solidArea = new Rectangle();
+	solidArea.x = 8;
+	solidArea.y = 8;
+	solidArea.width = 60;
+	solidArea.height = 60;
+
 	setDefaultValues();
 	getPlayerImage();
     }
     public void setDefaultValues(){
-	x = 100;
-	y = 100;
+	x = 0;
+	y = 0;
 	speed = 4;
     }
     public void getPlayerImage(){
 	try{
 
-	   sprite = ImageIO.read(getClass().getResourceAsStream("/spriteAndTiles/player.png")); 
+	   sprite = ImageIO.read(getClass().getResourceAsStream("/spriteAndTiles/playerV2.png")); 
 
 	}catch(IOException e){
 	   e.printStackTrace(); 
@@ -53,6 +60,9 @@ public class Player extends Entity{
 	if(input.right){
 	    x += speed;//For whatever reason Y increases as you go down.
 	}
+
+	collisionOn = false;
+	gamePanel.collisionCheck.checkTile(this);
     }
     public void draw(Graphics2D g2){
 	//g2.setColor(Color.white);
