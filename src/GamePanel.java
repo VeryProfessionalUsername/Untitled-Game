@@ -21,11 +21,6 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Player player = new Player(this,input);
 
-    //Player position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;//decides how far player moves per "tick" when input key is pressed.
-
     int fps = 60;//frames per second
     final int NANOSECONDS_PER_SECOND = 1000000000;
 
