@@ -11,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int ORIGINAL_TILE_SIZE = 16; //size of game tiles
     final int SCALE = 4; //Factor to scale up tiles. On 1080p 16x16 looks small
 
-    final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; //Tile size scaled up
+    public final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; //Tile size scaled up
     final int MAX_COL = 16; // Columns and rows of tiles making up game
     final int MAX_ROW = 12; //4:3 resolution
     final int SCREEN_WIDTH = TILE_SIZE * MAX_COL; //Window width in pixels
@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     InputDetection input = new InputDetection();//Creates new input detection created in InputDetection.java
     Thread gameThread;
+    Player player = new Player(this,input);
 
     //Player position
     int playerX = 100;
@@ -68,18 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void update(){
-	if(input.up){
-	    playerY -= playerSpeed;//For whatever reason Y increases as you go down.
-	}
-	if(input.left){
-	    playerX -= playerSpeed;//For whatever reason Y increases as you go down.
-	}
-	if(input.down){
-	    playerY += playerSpeed;//For whatever reason Y increases as you go down.
-	}
-	if(input.right){
-	    playerX += playerSpeed;//For whatever reason Y increases as you go down.
-	}
+	player.update();
     }
     
     public void paintComponent(Graphics g){
@@ -88,9 +78,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	Graphics g2 = (Graphics2D)g;//Graphics2D similar to Graphics + extra functionality
 
-	g2.setColor(Color.white);
-
-	g2.fillRect(playerX, playerY, TILE_SIZE, TILE_SIZE);//Creates rectangle at (100, 100) that is TILE_SIZE square
+	player.draw((Graphics2D) g2);
 
 	g2.dispose();
     }
